@@ -1,0 +1,18 @@
+#include <stdio,h>
+int main(void)
+ {
+     char buf[128] = {0};  // 这里要都初始化为0
+     FILE *fp = fopen("a.txt", "r");
+     while (0 != fread(buf, 1, 127, fp))   // 这里不能读满，最大只能用127     
+ {
+         printf("%s",  buf);
+         memset(buf, 0, 128);      
+     }
+Fclose(fp);
+return 0;
+}
+
+Makefile内容如下：main:main.o
+gcc -o main main.c
+                   clean:
+rm -f main main.o
