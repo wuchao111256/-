@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#define BUF_SIZE 1024*8
+int main()
+{
+    int fds, fdd;
+    char buf[BUF_SIZE];
+    size_t hasread = 0;
+    fds = open("filea", O_RDONLY);
+    fdd = open("fileb", O_WRONLY, O_CREAT);
+    if(fds && fdd)
+    {
+        while((hasread = read(fds, buf, sizeof(buf))) > 0)
+        {
+            write(fdd, buf, hasread);
+        }
+        close(fds);
+        close(fdd);
+    }
+}
